@@ -1,0 +1,24 @@
+.board {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid;
+    border-color: gray;
+}
+
+.square{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    height: 80px;
+    width: 80px;
+}
+
+.point {
+    border-radius: 50%;
+    height: 25px;
+    width: 25px;
+    background-color: blue;
+}
