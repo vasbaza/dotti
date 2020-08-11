@@ -12,7 +12,7 @@ class Hallo extends React.Component {
     render() {
         const { message } = this.state;
 
-        return <h1>Hallo {message}!</h1>;
+        return <h1>Hello, {message}!</h1>;
     }
 }
 
