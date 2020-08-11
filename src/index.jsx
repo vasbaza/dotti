@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Hallo from './components/hallo/hallo';
+import Hello from './components/hallo/hello';
 import Board from './components/board/board';
 
 // ReactDOM.render(
@@ -13,7 +13,7 @@ import Board from './components/board/board';
 
 ReactDOM.render(
     <React.StrictMode>
-        <Hallo />
+        <Hello />
         <Board />
     </React.StrictMode>,
     document.getElementById('root'),
