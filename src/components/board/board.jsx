@@ -5,11 +5,15 @@ import {getArr} from "../../utils/getarr";
 const COLUMNS = 10;
 const ROWS = 10;
 
+const BLUE_PLAYER = 'blue';
+const RED_PLAYER = 'red';
+
 class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            squares: getArr(ROWS, COLUMNS)
+            squares: getArr(ROWS, COLUMNS),
+            coordinates: [null, null]
         };
     }
 
@@ -21,7 +25,7 @@ class Board extends React.Component {
 
     renderSquare = (row, column) => (
         <div className="square" onClick={() => this.drawPoint(row, column)}>
-            {this.state.squares[row][column] && <div className="point"/>}
+            {this.state.squares[row][column] && <div className="pointBlue"/>}
         </div>
     );
 
