@@ -1,6 +1,7 @@
 import React from 'react';
 import './board.css';
-import {getArr} from "../../utils/getarr";
+import {getArr} from "../../utils/get-arr";
+import {deepClone} from "../../utils/deep-clone";
 
 const COLUMNS = 10;
 const ROWS = 10;
@@ -22,13 +23,13 @@ class Board extends React.Component {
     }
 
     drawPoint = (row, column) => {
-        const squares = [...this.state.squares];
+        const squares = deepClone(this.state.squares);
         squares[row][column] = !squares[row][column];
         this.setState({squares: squares});
     };
 
     renderSquare = (row, column) => (
-        <div className="square" onClick={() => this.drawPoint(row, column)}>
+        <div className="square" key={column} onClick={() => this.drawPoint(row, column)}>
             {this.state.squares[row][column] && <div className="pointBlue"/>}
         </div>
     );
@@ -44,7 +45,7 @@ class Board extends React.Component {
     renderRows = () => {
         let arrayOfRows = []
         for (let row = 0; row < ROWS; row++) {
-            arrayOfRows.push(<div className="row">{this.renderSquares(row)}</div>);
+            arrayOfRows.push(<div className="row" key={row}>{this.renderSquares(row)}</div>);
         }
         return arrayOfRows;
     }
