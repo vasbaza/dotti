@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Hello from './components/hallo/hello';
+import Hello from './components/hello/hello';
 import Board from './components/board/board';
 
 // ReactDOM.render(
