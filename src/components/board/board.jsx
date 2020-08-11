@@ -17,6 +17,10 @@ class Board extends React.Component {
         };
     }
 
+    sendStep = () => {
+
+    }
+
     drawPoint = (row, column) => {
         const squares = [...this.state.squares];
         squares[row][column] = !squares[row][column];
@@ -47,8 +51,11 @@ class Board extends React.Component {
 
     render() {
         return (
-            <div className="board">
+            <div className="game">
+                <div className="board">
                 {this.renderRows()}
+                </div>
+                <button className="sendStep" onClick={this.sendStep()}>Отправить ход!</button>
             </div>
         );
     }

@@ -1,3 +1,10 @@
+.game {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .board {
     display: flex;
     flex-direction: column;
@@ -36,4 +43,11 @@
     height: 10px;
     width: 10px;
     background-color: red;
+}
+
+.sendStep {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
 }
