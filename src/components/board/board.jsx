@@ -20,8 +20,12 @@ class Board extends React.Component {
     }
 
     // TODO: Менять сетку и очередность здесь
-    changeBoardAndPlayer = () => {
-
+    sendStep = () => {
+        if (this.state.player === BLUE_PLAYER) {
+            this.setState({player: RED_PLAYER});
+        } else if (this.state.player === RED_PLAYER) {
+            this.setState({player: BLUE_PLAYER});
+        }
     }
 
     // TODO: Запоминать координаты здесь
@@ -50,17 +54,20 @@ class Board extends React.Component {
         const squares = this.state.squares;
         const pointBlue = <div className="pointBlue"></div>;
         const pointRed = <div className="pointRed"></div>;
+        const coordinates = this.state.coordinates;
 
-        if (squares[row][column] === BLUE_PLAYER) {
-            return pointBlue;
-        } else if (squares[row][column] === RED_PLAYER) {
-            return pointRed;
+        if (coordinates[0] === row && coordinates[1] === column) {
+
+            if (squares[row][column] === BLUE_PLAYER) {
+                return pointBlue;
+            } else if (squares[row][column] === RED_PLAYER) {
+                return pointRed;
+            }
         }
     }
 
     renderSquares = row => {
         const arrayOfSquares = [];
-        const coordinates = this.state.coordinates;
 
         for (let column = 0; column < COLUMNS; column++) {
             arrayOfSquares.push(<div className="square" key={column} onClick={() => (this.drawPoint(row, column))}>{this.renderPoints(row,column)}</div>);
