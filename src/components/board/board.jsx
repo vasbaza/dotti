@@ -3,8 +3,8 @@ import './board.css';
 import {getArr} from "../../utils/get-arr";
 import {deepClone} from "../../utils/deep-clone";
 
-const COLUMNS = 10;
-const ROWS = 10;
+const COLUMNS = 12;
+const ROWS = 12;
 
 const BLUE_PLAYER = 'blue';
 const RED_PLAYER = 'red';
@@ -14,30 +14,56 @@ class Board extends React.Component {
         super(props);
         this.state = {
             squares: getArr(ROWS, COLUMNS),
+            player: BLUE_PLAYER,
             coordinates: [null, null]
         };
     }
 
-    sendStep = () => {
+    // TODO: Менять сетку и очередность здесь
+    changeBoardAndPlayer = () => {
 
     }
 
+    // TODO: Запоминать координаты здесь
+    rememberCoordinates = (row, column) => {
+        this.setState({coordinates: [row, column]})
+    }
+
+    // TODO: изменить состояние квадоатиков и вызвать функцию по запонимнанию координат
     drawPoint = (row, column) => {
         const squares = deepClone(this.state.squares);
-        squares[row][column] = !squares[row][column];
-        this.setState({squares: squares});
-    };
 
-    renderSquare = (row, column) => (
-        <div className="square" key={column} onClick={() => this.drawPoint(row, column)}>
-            {this.state.squares[row][column] && <div className="pointBlue"/>}
-        </div>
-    );
+        this.rememberCoordinates(row, column);
+
+        if (this.state.player === BLUE_PLAYER) {
+            squares[row][column] = BLUE_PLAYER;
+            // this.setState({player: RED_PLAYER});
+        } else if (this.state.player === RED_PLAYER) {
+            squares[row][column] = RED_PLAYER;
+            // this.setState({player: BLUE_PLAYER});
+        }
+
+        this.setState({squares: squares})
+    }
+
+    renderPoints = (row,column) => {
+        const squares = this.state.squares;
+        const pointBlue = <div className="pointBlue"></div>;
+        const pointRed = <div className="pointRed"></div>;
+
+        if (squares[row][column] === BLUE_PLAYER) {
+            return pointBlue;
+        } else if (squares[row][column] === RED_PLAYER) {
+            return pointRed;
+        }
+    }
 
     renderSquares = row => {
         const arrayOfSquares = [];
+        const coordinates = this.state.coordinates;
+
         for (let column = 0; column < COLUMNS; column++) {
-            arrayOfSquares.push(this.renderSquare(row, column));
+            arrayOfSquares.push(<div className="square" key={column} onClick={() => (this.drawPoint(row, column))}>{this.renderPoints(row,column)}</div>);
         }
         return arrayOfSquares;
     }
@@ -54,9 +80,9 @@ class Board extends React.Component {
         return (
             <div className="game">
                 <div className="board">
-                {this.renderRows()}
+                    {this.renderRows()}
                 </div>
-                <button className="sendStep" onClick={this.sendStep()}>Отправить ход!</button>
+                <button className="sendStep" onClick={() => this.sendStep()}>Отправить ход!</button>
             </div>
         );
     }
