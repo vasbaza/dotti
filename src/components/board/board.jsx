@@ -20,7 +20,9 @@ class Board extends React.Component {
     }
 
     // TODO: Менять сетку и очередность здесь
-    sendStep = () => {
+    sendStep = (row, column) => {
+
+
         if (this.state.player === BLUE_PLAYER) {
             this.setState({player: RED_PLAYER});
         } else if (this.state.player === RED_PLAYER) {
@@ -41,10 +43,8 @@ class Board extends React.Component {
 
         if (this.state.player === BLUE_PLAYER) {
             squares[row][column] = BLUE_PLAYER;
-            // this.setState({player: RED_PLAYER});
         } else if (this.state.player === RED_PLAYER) {
             squares[row][column] = RED_PLAYER;
-            // this.setState({player: BLUE_PLAYER});
         }
 
         this.setState({squares: squares})
@@ -57,7 +57,6 @@ class Board extends React.Component {
         const coordinates = this.state.coordinates;
 
         if (coordinates[0] === row && coordinates[1] === column) {
-
             if (squares[row][column] === BLUE_PLAYER) {
                 return pointBlue;
             } else if (squares[row][column] === RED_PLAYER) {
@@ -89,7 +88,7 @@ class Board extends React.Component {
                 <div className="board">
                     {this.renderRows()}
                 </div>
-                <button className="sendStep" onClick={() => this.sendStep()}>Отправить ход!</button>
+                <button className="sendStep" onClick={() => this.sendStep(row, column)}>Отправить ход!</button>
             </div>
         );
     }
