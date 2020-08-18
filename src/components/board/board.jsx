@@ -68,19 +68,24 @@ class Board extends React.Component {
     drawPoint = (row, column) => {
         const squares = deepClone(this.state.squares);
 
-        this.rememberCoordinates(row, column);
-
-        if (this.state.player === BLUE_PLAYER) {
-            squares[row][column] = BLUE_PLAYER;
-        } else if (this.state.player === RED_PLAYER) {
-            squares[row][column] = RED_PLAYER;
+        if (squares[row][column] === null) {
+            this.rememberCoordinates(row, column);
         }
 
-        this.setState({squares: squares})
+        // this.rememberCoordinates(row, column);
+
+        // if (this.state.player === BLUE_PLAYER) {
+        //     squares[row][column] = BLUE_PLAYER;
+        // } else if (this.state.player === RED_PLAYER) {
+        //     squares[row][column] = RED_PLAYER;
+        // }
+        //
+        // this.setState({squares: squares})
     }
 
     renderPoint = (row,column) => {
         const squares = this.state.squares;
+        const player = this.state.player;
         const pointBlue = <div className="pointBlue"></div>;
         const pointRed = <div className="pointRed"></div>;
         const coordinates = this.state.coordinates;
@@ -88,9 +93,9 @@ class Board extends React.Component {
         // this.renderActualBoard();
 
         if (coordinates[0] === row && coordinates[1] === column) {
-            if (squares[row][column] === BLUE_PLAYER) {
+            if (player === BLUE_PLAYER) {
                 return pointBlue;
-            } else if (squares[row][column] === RED_PLAYER) {
+            } else if (player === RED_PLAYER) {
                 return pointRed;
             }
         }
