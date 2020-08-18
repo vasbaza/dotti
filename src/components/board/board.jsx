@@ -13,96 +13,92 @@ class Board extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            squares: getArr(ROWS, COLUMNS),
+            cells: getArr(ROWS, COLUMNS),
             player: BLUE_PLAYER,
-            coordinates: [null, null]
+            cellCoordinates: [null, null]
         };
     }
 
     sendStep = () => {
-        const coordinates = this.state.coordinates;
-        const row = coordinates[0];
-        const column = coordinates[1];
+        const currentCellCoordinates = this.state.cellCoordinates;
+        const currentCellRowCoordinate = currentCellCoordinates[0];
+        const currentCellColumnCoordinate = currentCellCoordinates[1];
 
-        if (row === null || column === null) {
+        if (currentCellRowCoordinate === null || currentCellColumnCoordinate === null) {
             alert("Вы не сделали ход!");
             return;
         }
 
-        const squares = deepClone(this.state.squares);
-        const player = this.state.player;
-        const state = {};
+        const cells = deepClone(this.state.cells);
+        const currentPlayer = this.state.player;
+        const boardState = {};
 
-        squares[row][column] = player;
+        cells[currentCellRowCoordinate][currentCellColumnCoordinate] = currentPlayer;
 
-        if (player === BLUE_PLAYER) {
-            state.player = RED_PLAYER;
-        } else if (player === RED_PLAYER) {
-            state.player = BLUE_PLAYER;
+        if (currentPlayer === BLUE_PLAYER) {
+            boardState.player = RED_PLAYER;
+        } else if (currentPlayer === RED_PLAYER) {
+            boardState.player = BLUE_PLAYER;
         }
 
-        state.squares = squares;
-        state.coordinates = [null, null];
+        boardState.cells = cells;
+        boardState.cellCoordinates = [null, null];
 
-        this.setState(state);
+        this.setState(boardState);
     }
 
-    rememberCoordinates = (row, column) => {
-        this.setState({coordinates: [row, column]})
-    }
+    rememberCellCoordinates = (currentCellRowCoordinate, currentCellColumnCoordinate) => {
+        const cells = deepClone(this.state.cells);
 
-    drawPoint = (row, column) => {
-        const squares = deepClone(this.state.squares);
-
-        if (squares[row][column] === null) {
-            this.rememberCoordinates(row, column);
+        if (cells[currentCellRowCoordinate][currentCellColumnCoordinate] === null) {
+            this.setState({cellCoordinates: [currentCellRowCoordinate, currentCellColumnCoordinate]});
         }
     }
 
-    renderPoint = (row,column) => {
-        const squares = this.state.squares;
-        const player = this.state.player;
-        const coordinates = this.state.coordinates;
+    renderPoint = (currentCellRowCoordinate,currentCellColumnCoordinate) => {
+        const cells = this.state.cells;
+        const currentPlayer = this.state.player;
+        const currentCellCoordinates = this.state.cellCoordinates;
         const pointBlue = <div className="pointBlue"/>;
         const pointRed = <div className="pointRed"/>;
 
-        if (coordinates[0] === row && coordinates[1] === column) {
-            if (player === BLUE_PLAYER) {
+        if (currentCellCoordinates[0] === currentCellRowCoordinate && currentCellCoordinates[1] === currentCellColumnCoordinate) {
+            if (currentPlayer === BLUE_PLAYER) {
                 return pointBlue;
-            } else if (player === RED_PLAYER) {
+            } else if (currentPlayer === RED_PLAYER) {
                 return pointRed;
             }
         }
 
-        if (squares[row][column] === BLUE_PLAYER) {
+        if (cells[currentCellRowCoordinate][currentCellColumnCoordinate] === BLUE_PLAYER) {
             return pointBlue;
-        } else if (squares[row][column] === RED_PLAYER) {
+        } else if (cells[currentCellRowCoordinate][currentCellColumnCoordinate] === RED_PLAYER) {
             return pointRed;
         }
     }
 
-    renderSquares = row => {
-        const arrayOfSquares = [];
+    renderCells = currentCellRowCoordinate => {
+        const arrayOfCells = [];
 
-        for (let column = 0; column < COLUMNS; column++) {
-            arrayOfSquares.push(<div className="square" key={column} onClick={() => (this.drawPoint(row, column))}>{this.renderPoint(row,column)}</div>);
+        for (let currentCellColumnCoordinate = 0; currentCellColumnCoordinate < COLUMNS; currentCellColumnCoordinate++) {
+            arrayOfCells.push(<div className="square" key={currentCellColumnCoordinate} onClick={() => (this.rememberCellCoordinates(currentCellRowCoordinate, currentCellColumnCoordinate))}>{this.renderPoint(currentCellRowCoordinate, currentCellColumnCoordinate)}</div>);
         }
-        return arrayOfSquares;
+        return arrayOfCells;
     }
 
-    renderRows = () => {
-        let arrayOfRows = []
-        for (let row = 0; row < ROWS; row++) {
-            arrayOfRows.push(<div className="row" key={row}>{this.renderSquares(row)}</div>);
+    renderBoardRows = () => {
+        let arrayOfBoardRows = []
+        for (let currentCellRowCoordinate = 0; currentCellRowCoordinate < ROWS; currentCellRowCoordinate++) {
+            arrayOfBoardRows.push(<div className="row" key={currentCellRowCoordinate}>{this.renderCells(currentCellRowCoordinate)}</div>);
         }
-        return arrayOfRows;
+        return arrayOfBoardRows;
     }
 
     render() {
         return (
             <div className="game">
                 <div className="board">
-                    {this.renderRows()}
+                    {this.renderBoardRows()}
                 </div>
                 <button className="sendStep" onClick={() => this.sendStep()}>Отправить ход!</button>
             </div>
