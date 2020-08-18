@@ -55,7 +55,7 @@ class Board extends React.Component {
         }
     }
 
-    renderPoint = (currentCellRowCoordinate,currentCellColumnCoordinate) => {
+    renderPoint = (currentCellRowCoordinate, currentCellColumnCoordinate) => {
         const cells = this.state.cells;
         const currentPlayer = this.state.player;
         const currentCellCoordinates = this.state.cellCoordinates;
@@ -81,7 +81,8 @@ class Board extends React.Component {
         const arrayOfCells = [];
 
         for (let currentCellColumnCoordinate = 0; currentCellColumnCoordinate < COLUMNS; currentCellColumnCoordinate++) {
-            arrayOfCells.push(<div className="square" key={currentCellColumnCoordinate} onClick={() => (this.rememberCellCoordinates(currentCellRowCoordinate, currentCellColumnCoordinate))}>{this.renderPoint(currentCellRowCoordinate, currentCellColumnCoordinate)}</div>);
+            arrayOfCells.push(<div className="square" key={currentCellColumnCoordinate}
+                                   onClick={() => (this.rememberCellCoordinates(currentCellRowCoordinate, currentCellColumnCoordinate))}>{this.renderPoint(currentCellRowCoordinate, currentCellColumnCoordinate)}</div>);
         }
         return arrayOfCells;
     }
@@ -89,7 +90,8 @@ class Board extends React.Component {
     renderBoardRows = () => {
         let arrayOfBoardRows = []
         for (let currentCellRowCoordinate = 0; currentCellRowCoordinate < ROWS; currentCellRowCoordinate++) {
-            arrayOfBoardRows.push(<div className="row" key={currentCellRowCoordinate}>{this.renderCells(currentCellRowCoordinate)}</div>);
+            arrayOfBoardRows.push(<div className="row"
+                                       key={currentCellRowCoordinate}>{this.renderCells(currentCellRowCoordinate)}</div>);
         }
         return arrayOfBoardRows;
     }
